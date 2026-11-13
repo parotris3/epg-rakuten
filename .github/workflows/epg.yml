@@ -1,0 +1,45 @@
+name: Actualizar EPG Rakuten TV
+
+on:
+  schedule:
+    # GitHub Actions utiliza la zona horaria UTC:
+    # - En invierno (CET = UTC+1): 05:00 UTC = 06:00 España | 17:00 UTC = 18:00 España
+    # - En verano (CEST = UTC+2):  04:00 UTC = 06:00 España | 16:00 UTC = 18:00 España
+    - cron: '0 5,17 * * *'
+  workflow_dispatch: # Permite ejecutar el workflow manualmente desde la pestaña Actions en GitHub
+
+# Permisos necesarios para que GitHub Actions pueda hacer commit y push al repositorio
+permissions:
+  contents: write
+
+jobs:
+  build-epg:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Descargar repositorio
+        uses: actions/checkout@v4
+
+      - name: Configurar Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Ejecutar generador de EPG y canales
+        run: |
+          python rakuten_epg.py -d 2 -z -o rakuten_es_epg.xml -c canales.txt
+
+      - name: Confirmar y subir cambios
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+
+          git add rakuten_es_epg.xml rakuten_es_epg.xml.gz canales.txt
+
+          # Solo hacer commit si hubo cambios en los ficheros
+          if git diff --staged --quiet; then
+            echo "No se detectaron cambios en la guía EPG."
+          else
+            git commit -m "chore(epg): actualización automática de guía EPG y canales [skip ci]"
+            git push
+          fi
