@@ -8,15 +8,15 @@ Una vez subido a tu repositorio de GitHub, podrás usar las siguientes URLs dire
 
 - **Guía XMLTV comprimida (Recomendada):**
   ```text
-  https://raw.githubusercontent.com/<TU_USUARIO>/<TU_REPOSITORIO>/main/rakuten_es_epg.xml.gz
+  https://raw.githubusercontent.com/parotris3/epg-rakuten/main/rakuten_es_epg.xml.gz
   ```
 - **Guía XMLTV sin comprimir:**
   ```text
-  https://raw.githubusercontent.com/<TU_USUARIO>/<TU_REPOSITORIO>/main/rakuten_es_epg.xml
+  https://raw.githubusercontent.com/parotris3/epg-rakuten/main/rakuten_es_epg.xml
   ```
 - **Listado de canales:**
   ```text
-  https://raw.githubusercontent.com/<TU_USUARIO>/<TU_REPOSITORIO>/main/canales.txt
+  https://raw.githubusercontent.com/parotris3/epg-rakuten/main/canales.txt
   ```
 
 ---
